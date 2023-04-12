@@ -1,0 +1,26 @@
+site_name: 笔记
+site_url: https://wangzhengquan.github.io/notes
+theme: material
+plugins:
+  - search
+  - minify:
+      minify_html: true
+      htmlmin_opts:
+        remove_comments: true
+nav: 
+  - 简介: 'index.md'
+  - xv6: 
+    - Boot loader: 'xv6/boot_loader.md'
+    - Entry kernel: 'xv6/entry_ kernel.md'
+    - Scheduler: 'xv6/scheduler.md'
+    - 第一个进程: 'xv6/the_first_process.md'
+    - 中断:
+      - 中断处理流程: 'xv6/interrups_process.md'
+      - 系统调用: 'xv6/system_call.md'
+      - 时间中断: 'xv6/timer_interrupt.md'
+      - 硬盘中断: 'xv6/disk_interrupt.md'
+    - 文件系统: 'xv6/file_system.md'
+    - 设备管理: 'xv6/device.md'
+   
+
+   
