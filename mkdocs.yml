@@ -9,7 +9,8 @@ plugins:
         remove_comments: true
 nav: 
   - 简介: 'index.md'
-  - xv6: 
+  - OS (xv6): 
+    - xv6简介: 'xv6/index.md'
     - Boot loader: 'xv6/boot_loader.md'
     - Entry kernel: 'xv6/entry_ kernel.md'
     - Scheduler: 'xv6/scheduler.md'
@@ -21,6 +22,10 @@ nav:
       - 硬盘中断: 'xv6/disk_interrupt.md'
     - 文件系统: 'xv6/file_system.md'
     - 设备管理: 'xv6/device.md'
-   
+  - network:
+    - TCP: 'network/tcp.md'
+    - ICMP: 'network/icmp.md'
+    - DNS: 'network/dns.md'
+    - DHCP: 'network/dhcp.md'
 
    

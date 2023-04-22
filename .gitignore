@@ -1,3 +1,4 @@
 .gdbinit
 site/
 .DS_Store
+.obsidian/
