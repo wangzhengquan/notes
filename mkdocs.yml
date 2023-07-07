@@ -27,5 +27,8 @@ nav:
     - ICMP: 'network/icmp.md'
     - DNS: 'network/dns.md'
     - DHCP: 'network/dhcp.md'
+  - database:
+    - SQL: 'database/sql.md'
+    - B+ Tree: 'database/B+ Tree/B+ Tree.md'
 
    
