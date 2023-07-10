@@ -6,15 +6,15 @@ B + Tree is a variation of the B-tree data structure. In a B + tree, data pointe
 
 B+ Trees contain two types of nodes:
 
-- **Internal Nodes**: Internal Nodes have `n` keys  and `n+1` values(pointers) which point to child nodes. In actual implementation, the key number were also `n+1`, but the first one is invisible, such as the gray one in the diagram above. As you can see, the internal node's key equals the first key of it's child node to which its key's pointer points .
-- **Leaf Nodes**: Leaf Nodes are the nodes that have `n` keys and `n` values.
+- **Internal Nodes**: Internal Nodes have `n` keys  and `n+1` values(pointers) which point to child nodes. In actual implementation, the key number were also `n+1`, but the key at position 0 in an internal node is a virtual key, such as the gray one in the diagram above.  The virtual key conceptually represents the minimum key of the node, however, it may not necessarily have the minimum or even an actual value associated with it. Another noteworthy characteristic ,as illustrated in the diagram, is that the internal node's key equals the first key of it's child node to which its key's pointer points.
+- **Leaf Nodes**: Leaf Nodes have `n` keys and `n` values.
 
 ### The Structure of the Internal Nodes of a B+ Tree of Order `n` is as Follows
 
 ![Structure of B+tree Internal Node](img/Structure of B+tree Internal Node.png)
 
 
-1. Each internal node is of the form: `<K0 P0>, <K1 P1>, ..., <Km-1 Pm-1>, <Km Pm>` where `m < n+1` and each `Pi` is a tree pointer (i.e points to another node of the tree) and, each `Ki` is a key . To reiterate, K0 is invisible to the user.
+1. Each internal node is of the form: `<K0 P0>, <K1 P1>, ..., <Km-1 Pm-1>, <Km Pm>` where `m < n+1` and each `Pi` is a tree pointer (i.e points to another node of the tree) and, each `Ki` is a key . 
 2. Every internal node has : `K0 < K1 < … < Km`, for `m < n+1`
 3. For each search field value ‘X’ in the sub-tree pointed at by `Pi`, the following condition holds: `Ki =< X < Ki+1` for `0 < i < m` , `X >= Ki` for `i = m`, and `X <= Ki` for `i = 0` 
 4. Each internal node has  at most `n+1` tree pointers. The root node has at least two pointers, while the other internal nodes have at least `ceil(n/2)` tree pointers each.
@@ -78,7 +78,8 @@ If there is an overflow go ahead with the following steps mentioned below to dea
 
 - 3 : overflow happens  
 	- 3.1 : Split the node into two nodes. First node contains `ceil((n-1)/2)` values. Second node contains the remaining values.
-	- 3.2 : If the split node is not the root, we recursively insert the first element of the second node into its parent node. Otherwise, we create a new root node whose children are the two split nodes, and the hight of the tree increase one.
+	- 3.2 : If the split node is not the root, we recursively insert the first element of the second node into its parent node. This process continues until we find a suitable place for the element or reach the root node.
+	- 3.3 : However, if the split node is the root, we create a new node whose children are the two split nodes and make this node the new root of the tree. This means that the height of the tree increases by one.
 
 ## Insertion example
 In this example `n=5`. As the diagram shows that I insert 55 in the tree, the leaf node overflows, it is split and the element, in this case 50, is copied up (bubbled up) to it's parent node. If the parent node is also full, this process continues recursively until a node with space is found or a new root is created.
@@ -95,7 +96,7 @@ The deletion strategy for the B+ tree is as follows:
 - 1 : Locate the deleted key in the leaf nodes throught searching method.
 - 2 : Delete the key and its associated value if the key is discovered in a leaf node.
 - 3 : If the current node is root, proceed to step 3.1-3.2. Otherwise, proceed to step 4.
-	- 3.1 : If the root is a internal node and contains only one child node, then set the child node as the new root node, and delete the original root node. 
+	- 3.1 : If the root is a internal node and contains only one child node then set the child node as the new root node and delete the original root node. This means that the height of the tree decreases by one. 
 	- 3.2 : The deletion process is end.
 - 4 : If the node dose not underflows, assigne the parent's key whose pointer points to the current node as the first key of the current node to handle the case where the deleted key happens to be the minimum key of the current node prior to deletion. Otherwise continue to the next step.
 
