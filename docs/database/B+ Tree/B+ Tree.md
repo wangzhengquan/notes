@@ -45,9 +45,9 @@ BPlusTreeSearch(key){
 	}
 
 
-  i = IndexOfKeyInLeafNode(node, key);
-  if(i == -1) return null;
-  return node.elements[i];
+	i = IndexOfKeyInLeafNode(node, key);
+	if(i == -1) return null;
+	return node.elements[i];
 }
 
 IndexOfKeyInInternalNode(node, key) {
