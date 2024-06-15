@@ -40,7 +40,7 @@ trapret:
 
 ## 运行initcode.S
 
-initcode.S 实际就是手动制作了一个系统调用，首先`pushl $argv` , `pushl $init` 作为系统调用的参数。然后`pushl $0 `是系统调用的返回地址, 实际调用exec不会返回，这个地址只是占位用的。最后`movl $SYS_exec, %eax` 是把eax设置为代表exec的系统调用的编号，并执行 int T_SYSCALL 发起一个系统调用的中断，相内核申请运行exec系统调用（关于系统调用和中断处理流程参见后面的“中断处理”和“系统调用”章节）。exec系统调用服务根据用户程序传入的参数"init",把initcode 替换为init并运行。“init”开启了一个控制台shell.
+initcode.S 实际就是手动制作了一个系统调用，首先`pushl $argv` , `pushl $init` 作为系统调用的参数。然后`pushl $0 `是系统调用的返回地址, 实际调用exec不会返回，这个地址只是占位用的。最后`movl $SYS_exec, %eax` 是把eax设置为代表exec的系统调用的编号，并执行 int T_SYSCALL 发起一个系统调用的中断，向内核申请运行exec系统调用（关于系统调用和中断处理流程参见后面的“中断处理”和“系统调用”章节）。exec系统调用服务根据用户程序传入的参数"init",把initcode 替换为init并运行。“init”开启了一个控制台shell.
  
 
 

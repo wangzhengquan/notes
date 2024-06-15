@@ -9,5 +9,5 @@ CPU的时钟每隔一段时间都会产生一个中断，这样内核就可以�
 追踪yield的调用轨迹依次进入 `yield（）-> sched() --> swtch(&p->context, mycpu()->scheduler)`,关于swtch的具体分析在"CPU调度线程"那里已经作过描述。这里的`mycpu()->scheduler`就是上一次在`scheduler（）`调用swtch让出CPU给当下这个进程并把自己的寄存器保存的位置。这里再次调用swtch 只是参数的顺序与上一次正好相反，CPU调度线程（mycpu()->scheduler）被换入，进程（p->context）被换出。这里的swtch执行完成后，当前进程让出CPU停止运行，scheduler重新获得CPU接着上次停止的地方继续运行，寻找下一个可以运行的进程。后面的某一个时刻scheduler也会再次选中当前停止的进程再次恢复它的运行。当被恢复的时候，当前进程接着上次中止的地方也就是调用swtch的地方的继续执行,按之前“yield”的调用轨迹相反的方向依次返回，最后调用trapret返回到被“时间中断”中断的位置继续执行。
 
 
-从上面的可以看出sched() 和 scheduler() 相互协作，像这样的连个函数被称为“coroutines”。
+从上面的可以看出sched() 和 scheduler() 相互协作，像这样的两个函数被称为“coroutines”。
  

@@ -38,7 +38,7 @@ $(LD)链接命令负责把'.o'文件链接为可执行文件。 上面说过BIOS
 在"x86 的启动"一节中讲到BIOS会把boot loader加载到内存的0x7c00的位置，然后跳转到这个位置去执行boot loader代码。此时控制权已经交给boot loader了. boot loader主要完成了两个功能：  
 
 *  实模式切换到保护模式：从20位（1M）寻址实模式切换到32位(4G)寻址的保护模式
-*  加载内核：根据ELF内核文件所指定的物理地址，从硬盘中把内核到内存中的该地址上，然后跳转到内核ELF文件所地址的入口点。
+*  加载内核：根据ELF内核文件所指定的物理地址，从硬盘中把内核加载到内存中，然后跳转到内核ELF文件所地址的入口点。
 
 ## 实模式到保护模式
 
@@ -216,7 +216,7 @@ ljmp  $(SEG_KCODE<<3) $start32
 
 而这时我们已经在分段式的保护模式下了，所以我们通过这句跳转语句来直观的感受一下分段式保护模式下的内存寻址。
 
-前面预备知识里说道在分段式保护模式下“段基址”（基地址）不再是内存地址，而是 GDT 表的下标。上面我们也说过 GDT 表最大可以有 8192 个表项（段描述符），213 = 8192，所以保存着“段基址”的 16 位段寄存器只需要其中的 13 位就可以表示一个 GDT 表的下标，其余的 3 位可用作他用。
+前面预备知识里说道在分段式保护模式下“段基址”（基地址）不再是内存地址，而是 GDT 表的下标。上面我们也说过 GDT 表最大可以有 8192 个表项（段描述符），2^13 = 8192，所以保存着“段基址”的 16 位段寄存器只需要其中的 13 位就可以表示一个 GDT 表的下标，其余的 3 位可用作他用。
 
 按照这个思路我们看看这个 $(SEG_KCODE<<3) 生成的“段基址”是什么？SEG_KCODE 是个宏定义，具体的定义在 mmu.h 文件中，我们翻译过来就是 $(1<<3)，再将它运算出来得到
 ![SEG_KCODE](./img/SEG_KCODE.png)
@@ -297,7 +297,7 @@ ELF program headers 记录了需要被加载的部分在文件中的起始位置
 这里的LOAD是需要被加载到内存中的段的标记。VirtAddr（link address）是编译器在link的时候所生成的地址，是程序代码执行的时候所期望的地址，这个地址通常是虚拟地址（virtual address），程序代码里面函数和变量所在的地址就是link addrees。PhysAddr（load address ）是表示这一段代码被加载的时候就加载到到内存的这个物理地址上。
 
 
-通过'Section to Segment mapping:'那段信息我们还可以看到，第一个 Segment 包含 .text .rodata 两个section,第二个Segment保护.data .bss 两个两个section。我们通过`readelf -S kernel`命令看看ELF文件的Section Headers。
+通过'Section to Segment mapping:'那段信息我们还可以看到，第一个 Segment 包含 .text .rodata 两个section,第二个Segment包括.data .bss 两个两个section。我们通过`readelf -S kernel`命令看看ELF文件的Section Headers。
 ```
 $ readelf -S kernel
 There are 16 section headers, starting at offset 0x33db4:
