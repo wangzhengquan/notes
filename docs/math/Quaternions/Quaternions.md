@@ -233,6 +233,7 @@ $$
 
 Now we multiply the result from Part A by $q* = [w, -\vec{v}]$.  
 Let $q p = [w', \vec{v'}]$ where $w' = -\vec{v} ⋅ \vec{p}$ and $\vec{v'} = w*\vec{p} + \vec{v} × \vec{p}$.
+
 $$
 \begin{align}
 p' &= [w', \, \vec{v'}] * [w, \, -\vec{v}]  \\
@@ -240,6 +241,7 @@ p' &= [w', \, \vec{v'}] * [w, \, -\vec{v}]  \\
  &= [w'*w + \vec{v'} ⋅ \vec{v}, \, -w'*\vec{v} + w*\vec{v'} - \vec{v'} \times\vec{v}]
 \end{align}
 $$
+
 The final result p' should be a pure quaternion (representing the rotated vector). Let's prove its scalar part is zero.  
 $$
 \begin{align}
