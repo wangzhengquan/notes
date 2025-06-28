@@ -1,20 +1,14 @@
 Readers are recommended to have read the [Rodrigues' rotation](../Rodrigues'%20rotation/Rodrigues'%20rotation.md) article ahead of time as it will be used to compare results.
-## Crash course on imaginiary/complex numbers
+## Crash course on imaginary/complex numbers
 
 Before we can get into understanding quaternions we first need to understand the concept of imaginary and complex numbers. The names might seem daunting, but for our purposes the concepts are pretty straight forward. 
 
 Imaginary numbers have a very simple purpose, to solve equations that real numbers couldn’t! For example: 
-
 $$x^2 + 25 = 0$$
-
 There is no real number solution to this equation because any real number we take to the power of two will result in a positive number. So in order for the above equation to be true it must be that:
-
 $$x^2 = -25$$
-
 This is what we call an imaginary number. They are special in the sense that they square to a real negative value. So far we have used $x$ as a variable, but usually when representing imaginary numbers we use what is called the imaginary unit `i` where $i^2 = -1$. That way we can represent any imaginary number as a product of a real number and `i`. For example:
-
 $$(5*i)^2 + 25 = 25*(i^2) + 25 = -25 + 25 = 0$$
-
 You might notice that the imaginary unit has a pattern when taken to different powers:
 
 | Power Pattern |
@@ -102,7 +96,7 @@ j*i = -k	k*j = -i	i*k = -j
 
 In short Hamilton said that instead of stumping ourselves by not knowing a real number that is the resulting product of two imaginary numbers just set its product to another imaginary number and from there we can figure stuff out.
 
-##   Operations (Add & Multiplication)
+##   Quaternion Operations (Add & Multiplication)
 
 We have quaternions in the following form:
 
@@ -145,7 +139,8 @@ $$
 \begin{flalign*}
 q_1 * q_2 &=[w₁, \vec{v₁}]*[w₂, \vec{v₂}] &\\
 		&= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) & \\
-        &= w_1w_2 + w_1(x_2i + y_2j + z_2k) \\
+		& \text{Expanding​ using the distributive property} \\
+        &= w_1w_2 + w_1(x_2i + y_2j + z_2k)  \\
         & \quad + x_1w_2i + x_1x_2i^2 + x_1y_2ij + x_1z_2ik \\
         & \quad + y_1w_2j + y_1x_2ji + y_1y_2j^2 + y_1z_2jk \\
         & \quad + z_1w_2k + z_1x_2ki + z_1y_2kj + z_1z_2k^2 \\
@@ -155,6 +150,8 @@ q_1 * q_2 &=[w₁, \vec{v₁}]*[w₂, \vec{v₂}] &\\
         &=[w₁w₂ - \vec{v₁}·\vec{v₂}, \; w₁\vec{v₂} + w₂\vec{v₁} + \vec{v₁}×\vec{v₂}]
 \end{flalign*}
 $$
+
+
 
 ## Definitions
 ###  Quaternion Conjugate and Inverse
@@ -280,14 +277,12 @@ $$p'_{vec} = (w² - ||\vec{v}||²) \vec{p} + 2w(\vec{v} × \vec{p}) + 2(\vec{v} 
 
 Finally, substitute $w = cos(θ/2)$ and $\vec{v} = sin(θ/2)\vec{u}$:
 
-- $w² - ||\vec{v}||² = cos²(θ/2) - sin²(θ/2)*||\vec{u}||² = cos²(θ/2) - sin²(θ/2) = cosθ$ (Double angle identity)
-- $2w(\vec{v} × \vec{p}) = 2cos(θ/2)(sin(θ/2)\vec{u} × \vec{p}) = 2cos(θ/2)sin(θ/2)(\vec{u} × \vec{p}) = sinθ(\vec{u} × \vec{p})$ (Double angle identity)
-- $2(\vec{v} ⋅ \vec{p}) \vec{v} = 2(sin(θ/2)\vec{u} ⋅ \vec{p}) (sin(θ/2)\vec{u}) = 2sin²(θ/2)(\vec{u} ⋅ \vec{p}) \vec{u} = (1 - cosθ)(\vec{u} ⋅ \vec{p}) \vec{u}$
-    Using the half-angle identity $2sin²(θ/2) = 1 - cosθ$
+- $w² - ||\vec{v}||² = cos²(θ/2) - sin²(θ/2)*||\vec{u}||² = cos²(θ/2) - sin²(θ/2) = cosθ$    (Double angle identity)
+- $2w(\vec{v} × \vec{p}) = 2cos(θ/2)(sin(θ/2)\vec{u} × \vec{p}) = 2cos(θ/2)sin(θ/2)(\vec{u} × \vec{p}) = sinθ(\vec{u} × \vec{p})$   (Double angle identity)
+- $2(\vec{v} ⋅ \vec{p}) \vec{v} = 2(sin(θ/2)\vec{u} ⋅ \vec{p}) (sin(θ/2)\vec{u}) = 2sin²(θ/2)(\vec{u} ⋅ \vec{p}) \vec{u} = (1 - cosθ)(\vec{u} ⋅ \vec{p}) \vec{u}$    (half-angle identity $2sin²(θ/2) = 1 - cosθ$)
 
 Substitute these back into the expression for $p'_{vec}$:  
 $$p'_{vec} = cosθ\vec{p} + sinθ(\vec{u} × \vec{p}) + (1 - cosθ)(\vec{u} ⋅ \vec{p}) \vec{u}$$
-
 Rearranging to match the standard form of Rodrigues' formula:  
 $$p'_{vec} = \vec{p}cosθ + (\vec{u} × \vec{p})sinθ + \vec{u}(\vec{u} ⋅ \vec{p})(1 - cosθ)$$
 
