@@ -150,9 +150,6 @@ q_1 * q_2 &=[w₁, \vec{v₁}]*[w₂, \vec{v₂}] &\\
         &=[w₁w₂ - \vec{v₁}·\vec{v₂}, \; w₁\vec{v₂} + w₂\vec{v₁} + \vec{v₁}×\vec{v₂}]
 \end{flalign*}
 $$
-
-
-
 ## Definitions
 ###  Quaternion Conjugate and Inverse
 
@@ -181,44 +178,31 @@ $$
 A 3D vector $\vec{p} = (p_x, p_y, p_z)$ is represented as a **pure quaternion**, which is a quaternion with a zero scalar part:  
 $$p = 0 + p_xi + p_yj + p_zk = [0, \vec{p}]$$
 
-
- 
-## Prove the validity of Quaternions
-
-The most crucial claim to prove is this:
-
-> The operation $p' = q p q⁻¹$ rotates the vector represented by the pure quaternion $p$ around the axis $\vec{v}$ by an angle θ, where $q$ is the unit quaternion representing that rotation.
-
-We will prove this by showing that the result of the quaternion formula is identical to the well-established **Rodrigues' Rotation Formula**.
-
-### Step 1: Preliminaries & Definitions
-####  The Unit Rotation Quaternion
+###  The Unit Rotation Quaternion
 
 For a rotation by angle θ around a **unit vector** axis $\vec{u} = (u_x, u_y, u_z)$, the corresponding **unit quaternion** (||q|| = 1) is:  
-$$q = [cos(θ/2), sin(θ/2) * \vec{u}] $$ 
-Since ||q|| = 1, its inverse is simply its conjugate: $q⁻¹ = \bar{q}.$
+$$q = [cos(θ/2), sin(θ/2) \vec{u}] $$ 
+Since ||q|| = 1, its inverse is simply its conjugate: $q⁻¹ = \bar{q}$ 
+## Prove the validity of Quaternions
 
-Therefore, our rotation formula becomes $$p' = q p \bar{q}$$ 
-### Step 2: The Ground Truth - Rodrigues' Rotation Formula
 
-This formula gives the result $\vec{p_{rot}}$ of rotating a vector $\vec{p}$ around a unit vector axis $\vec{u}$ by an angle θ. It is our destination.
-
-$$\vec{p_{rot}} = \vec{p}cosθ + (\vec{u} \times \vec{p})sinθ + \vec{u}(\vec{u} ⋅ \vec{p})(1 - cosθ)$$
-
-If we can show that the vector part of $q p q^*$ equals **$p_{rot}$, we have proven the validity of quaternion rotation.
-
-### Step 3: The Proof - Expanding the Quaternion Product
-
-Let's expand $p' = q p \bar{q}$.
-
-First, we need a key identity for the product of two pure quaternions $a = [0, \vec{a}]$ and $b = [0, \vec{b}]$:
-$$a b = [0, \vec{a}] * [0, \vec{b}] = [-\vec{a} ⋅ \vec{b}, \vec{a} × \vec{b}] $$
-This identity comes directly from expanding $(a_x i + a_y j + a_z k) * (b_x i + b_y j + b_z k)$.
-
-Let $q = [w, \vec{v}]$, where w = cos(θ/2) and $\vec{v} = sin(θ/2) * \vec{u}$.  
+Let $q = [w, \vec{v}]$, where w = cos(θ/2) , $\vec{v} = sin(θ/2) * \vec{u}$ and  $\vec{u}$ is a unit vector.  
 Let $p = [0, \vec{p}]$.
+ 
 
-#### Part A: Calculate q p
+The **Quaternion Formula**
+$$p' = q p \bar{q}$$
+gives the result $p'$ of rotating the vector represented by the pure quaternion $p$ around the axis $\vec{v}$ by an angle θ.
+
+The **Rodrigues' Rotation Formula**
+$$\vec{p_{rot}} = \vec{p}cosθ + (\vec{u} \times \vec{p})sinθ + \vec{u}(\vec{u} ⋅ \vec{p})(1 - cosθ)$$
+gives the result $\vec{p_{rot}}$ of rotating a vector $\vec{p}$ around a unit vector axis $\vec{u}$ by an angle θ.
+
+If we can show that the vector part of $p'$ equals $\vec{p_{rot}}$, we have proven the validity of quaternion rotation.
+ 
+###  Expanding the Quaternion Product
+
+#### Part A: Calculate $q p$
  
 Using the general quaternion multiplication rule $$[w₁, \vec{v₁}][w₂, \vec{v₂}] = [w₁*w₂ - \vec{v₁}·\vec{v₂}, w₁*\vec{v₂} + w₂*\vec{v₁} + \vec{v₁}×\vec{v₂}]$$we get:  
 $$
@@ -231,33 +215,32 @@ $$
 
 #### Part B: Calculate $(q p) \bar{q}$
 
-Now we multiply the result from Part A by $q* = [w, -\vec{v}]$.  
-Let $q p = [w', \vec{v'}]$ where $w' = -\vec{v} ⋅ \vec{p}$ and $\vec{v'} = w*\vec{p} + \vec{v} × \vec{p}$.
-
+Now we multiply the result from Part A by $\bar{q} = [w, -\vec{v}]$.  
+Let $q p = [w', \vec{v'}]$ where $w' = -\vec{v} ⋅ \vec{p}$ and $\vec{v'} = w\vec{p} + \vec{v} × \vec{p}$.
 $$
 \begin{align}
-p' &= [w', \, \vec{v'}] * [w, \, -\vec{v}]  \\
-  &= [w'*w - \vec{v'} ⋅ -\vec{v}), \, w'*\vec{v} + w*\vec{v'} + \vec{v'} \times -\vec{v}] \\
- &= [w'*w + \vec{v'} ⋅ \vec{v}, \, -w'*\vec{v} + w*\vec{v'} - \vec{v'} \times\vec{v}]
+p' &= [w', \, \vec{v'}] [w, \, -\vec{v}]  \\
+  &= [w'w - \vec{v'} ⋅ -\vec{v}), \, w'\vec{v} + w\vec{v'} + \vec{v'} \times -\vec{v}] \\
+ &= [w'w + \vec{v'} ⋅ \vec{v}, \, -w'\vec{v} + w\vec{v'} - \vec{v'} \times\vec{v}]
 \end{align}
 $$
 
-The final result p' should be a pure quaternion (representing the rotated vector). Let's prove its scalar part is zero.  
+The final result $p'$ should be a pure quaternion (representing the rotated vector). Let's prove its scalar part is zero.  
 $$
 \begin{align}
-Scalar \, part &=w'*w + \vec{v'} ⋅ \vec{v} \\ 
-&= (-\vec{v} ⋅ \vec{p})*w + (w*\vec{p} + \vec{v} × \vec{p}) ⋅ \vec{v}   \hspace{1cm} \text{ Substitute w' and v' } \\
-&= -w*(\vec{v} ⋅ \vec{p}) + w(\vec{p} ⋅ \vec{v}) + (\vec{v} × \vec{p}) ⋅ \vec{v}  
+Scalar \, part &=w'w + \vec{v'} ⋅ \vec{v} \\ 
+&= (-\vec{v} ⋅ \vec{p})w + (w\vec{p} + \vec{v} × \vec{p}) ⋅ \vec{v}   \hspace{1cm} \text{ Substitute w' and v' } \\
+&= -w(\vec{v} ⋅ \vec{p}) + w(\vec{p} ⋅ \vec{v}) + (\vec{v} × \vec{p}) ⋅ \vec{v}  
 \end{align}
 $$
 The term$(\vec{v} × \vec{p}) ⋅ \vec{v}$ is the dot product of a vector with the result of a cross product involving that same vector. The result of $\vec{v} × \vec{p}$ is a vector orthogonal to $\vec{v}$. The dot product of two orthogonal vectors is zero.  
-So,  $Scalar \, part= -w*(\vec{v} ⋅ \vec{p}) + w(\vec{p} ⋅ \vec{v}) + 0 = 0$.  
+So,  $Scalar \, part= -w(\vec{v} ⋅ \vec{p}) + w(\vec{p} ⋅ \vec{v}) + 0 = 0$.  
 **This confirms p' is a pure quaternion, as required.**
 
-Now for the complex part. The vector part is: $-w'*\vec{v} + w*\vec{v'} - \vec{v'} \times\vec{v}$.  
+Now for the complex part. The vector part is: $-w'\vec{v} + w\vec{v'} - \vec{v'} \times\vec{v}$.  
 Substitute w', $\vec{v'}$, w, and $\vec{v}$:
 
-1. $-w'\vec{v} = -(-\vec{v} ⋅ \vec{p}) *\vec{v} = (\vec{v} ⋅ \vec{p}) *\vec{v}$
+1. $-w'\vec{v} = -(-\vec{v} ⋅ \vec{p}) \vec{v} = (\vec{v} ⋅ \vec{p}) \vec{v}$
 2. $w\vec{v'} = w(w\vec{p} + \vec{v} × \vec{p}) = w²\vec{p} + w(\vec{v} × \vec{p})$
 3. $- \vec{v'} × \vec{v} = -(w\vec{p} + \vec{v} × \vec{p}) × \vec{v} = -(w(\vec{p} × \vec{v}) + (\vec{v} × \vec{p}) × \vec{v})$
      Using the vector triple product identity $(\vec{a} × \vec{b}) × \vec{c} = (\vec{a} ⋅ \vec{c})\vec{b} - (\vec{b} ⋅ \vec{c})\vec{a}$:
@@ -279,7 +262,7 @@ $$p'_{vec} = (w² - ||\vec{v}||²) \vec{p} + 2w(\vec{v} × \vec{p}) + 2(\vec{v} 
 
 Finally, substitute $w = cos(θ/2)$ and $\vec{v} = sin(θ/2)\vec{u}$:
 
-- $w² - ||\vec{v}||² = cos²(θ/2) - sin²(θ/2)*||\vec{u}||² = cos²(θ/2) - sin²(θ/2) = cosθ$    (Double angle identity)
+- $w² - ||\vec{v}||² = cos²(θ/2) - sin²(θ/2)||\vec{u}||² = cos²(θ/2) - sin²(θ/2) = cosθ$    (Double angle identity)
 - $2w(\vec{v} × \vec{p}) = 2cos(θ/2)(sin(θ/2)\vec{u} × \vec{p}) = 2cos(θ/2)sin(θ/2)(\vec{u} × \vec{p}) = sinθ(\vec{u} × \vec{p})$   (Double angle identity)
 - $2(\vec{v} ⋅ \vec{p}) \vec{v} = 2(sin(θ/2)\vec{u} ⋅ \vec{p}) (sin(θ/2)\vec{u}) = 2sin²(θ/2)(\vec{u} ⋅ \vec{p}) \vec{u} = (1 - cosθ)(\vec{u} ⋅ \vec{p}) \vec{u}$    (half-angle identity $2sin²(θ/2) = 1 - cosθ$)
 
