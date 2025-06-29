@@ -1,3 +1,4 @@
+  
 Readers are recommended to have read the [Rodrigues' rotation](../Rodrigues'%20rotation/Rodrigues'%20rotation.md) article ahead of time as it will be used to compare results.
 ## Crash course on imaginary/complex numbers
 
@@ -22,6 +23,7 @@ You might notice that the imaginary unit has a pattern when taken to different p
 | $i^6 = -1$    |
 | $i^7 = -i$    |
 | ...           |
+
 You'll note that this pattern also holds true for negative powers. Simply take notice that $i^{-1} = (1/i) * (i/i) = i/i^2 = i/-1 = -i$ and the rest of the negative powers become trivial to calculate.
 
 This pattern of `1, i, -1, -i` may feel familiar to you. If we treat the real number part of the pattern as being on the x-axis and the imaginary parts as being on the y-axis then the pattern is essentially the same as `x , y, -x, -y` which is rotating 90 degrees counter-clockwise.
@@ -65,6 +67,7 @@ You might be somewhat familiar with this formula. It's just the 2D rotation matr
 ## The quaternion is born
 
 Prior to quaternions most people saw the complex plane in 2D and simply figured if they wanted to add a third dimension they just had to add another imaginary number, say $j^2 = -1$. Quickly however they found this didn't quite work due to multiplication requiring us to know the product of two imaginary numbers.
+
 $$
 \begin{flalign*}
 (w_1 + x_1 i + y_1 j)(w_2 + x_2 i + y_2 j)  &= w_1 w_2 + w_1 x_2 i + w_1 y_2 j &\\ 
@@ -76,6 +79,7 @@ $$
 & \quad + x_1 y_2 ij + y_1 x_2 ji
 \end{flalign*}
 $$
+
 > Note: $ij$ and $ji$ are not commutative due to their imaginary nature. 
 
 For quite sometime this problem didn't see much attention until an Irish mathematician named William Rowan Hamilton who figured the best way to solve it was to add a third imaginary number. 
@@ -185,19 +189,16 @@ $$q = [cos(θ/2), sin(θ/2) \vec{u}] $$
 Since ||q|| = 1, its inverse is simply its conjugate: $q⁻¹ = \bar{q}$ 
 ## Prove the validity of Quaternions
 
-
-Let $q = [w, \vec{v}]$, where w = cos(θ/2) , $\vec{v} = sin(θ/2) * \vec{u}$ and  $\vec{u}$ is a unit vector.  
+Assume $\vec{u}$ is a unit vector.
+Let $q = [w, \vec{v}]$, where w = cos(θ/2) , $\vec{v} = sin(θ/2) * \vec{u}$ .  
 Let $p = [0, \vec{p}]$.
- 
-
-The **Quaternion Formula**
-$$p' = q p \bar{q}$$
-gives the result $p'$ of rotating the vector represented by the pure quaternion $p$ around the axis $\vec{v}$ by an angle θ.
 
 The **Rodrigues' Rotation Formula**
 $$\vec{p_{rot}} = \vec{p}cosθ + (\vec{u} \times \vec{p})sinθ + \vec{u}(\vec{u} ⋅ \vec{p})(1 - cosθ)$$
 gives the result $\vec{p_{rot}}$ of rotating a vector $\vec{p}$ around a unit vector axis $\vec{u}$ by an angle θ.
 
+The **Quaternion Formula** is:
+$$p' = q p \bar{q}$$
 If we can show that the vector part of $p'$ equals $\vec{p_{rot}}$, we have proven the validity of quaternion rotation.
  
 ###  Expanding the Quaternion Product

@@ -22,6 +22,15 @@ nav:
       - 硬盘中断: 'xv6/disk_interrupt.md'
     - 文件系统: 'xv6/file_system.md'
     - 设备管理: 'xv6/device.md'
+  - Math:
+    - Rodrigues' rotation: math/Rodrigues' rotation/Rodrigues' rotation.md
+    - Quaternions: math/Quaternions/Quaternions.md
+    - Windowing transformations: math/Windowing transformations.md
+    - distance from point  to plane: math/distance from point to plane.md
+  - graphics:
+    - Data shared between CPU and GPU: graphics/opengl/Data shared between CPU and GPU.md
+    - Matrices in opengl: graphics/opengl/Matrices in opengl.md
+    - VBO Indexing: graphics/opengl/VBO\ Indexing.md
   - network:
     - TCP: 'network/tcp.md'
     - ICMP: 'network/icmp.md'
